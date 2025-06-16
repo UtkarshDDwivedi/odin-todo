@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Faustina", serif;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 3.5fr;
+    grid-template-rows: 1fr;
+    height: 100vh;
+    background-color: #f1faee;
+}
+
+.sidebar {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr 4fr;
+    margin: 16px;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    background-color: #a8dadc;
+    color: #1d3557;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem;
+    font-weight: 600;
+}
+
+.todo,
+.spaces {
+    margin: 16px;
+    padding: 16px;
+    border-radius: 16px;
+    background-color: #457b9d;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 100%;
+    border: none;
+    border-radius: 16px;
+    background-color: #457b9d;
+    color: #1d3557;
+    cursor: pointer;
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding: 8px;
+    gap: 8px;
+}
+
+.btn img {
+    height: 25px;
+}
+
+.btn:hover {
+    background-color: #1e406e;
+    background-color: #1d3557;
+    color: #457b9d;
+    font-weight: 700;
+    opacity: 70%;
+}
+
+.active {
+    background-color: #1d3557;
+    color: #457b9d;
+    font-weight: 700;
+    box-shadow: 2px 2px white;
+}
+
+.sidebar h2 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.main {
+    margin: 16px;
+    color: #1d3557;
+    display: grid;
+    grid-template-rows: 1fr 7fr;
+}
+
+.main .title {
+    justify-content: start;
+    font-size: 3rem;
+}
+
+.content {
+    margin: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    gap: 8px;
+}
+
+.card-content {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 16px;
+    padding: 8px 16px;
+}
+
+.card-content:hover{
+    background-color: #0b2344;
+    color: #f1faee;
+    font-weight: 800;
+    opacity: 30%;
+}
+
+.info {
+    display: flex;
+    gap: 24px;
+    font-size: 1.2rem;
+}
+
+.info img {
+    height: 18px;
+}
+
+.date,
+.space {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.color {
+    height: 18px;
+    width: 18px;
+    background-color: red;
+    border-radius: 5px;
+}
+.label {
+    font-size: 2rem;
+}
+
+.label input {
+    height: 20px;
+    width: 20px;
+}
+
+label,
+input {
+    cursor: pointer;
+}

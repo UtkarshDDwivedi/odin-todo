@@ -86,6 +86,12 @@ export class TodoManager {
         return this.#spaces;
     }
 
+    static addSpace(space){
+        if (!(space in this.#spaces)) {
+            this.#spaces[space] = [];
+        }
+    }
+
     static addToSpace(todo) {
         if (todo.space in this.#spaces) {
             this.#spaces[todo.space].push(todo);
