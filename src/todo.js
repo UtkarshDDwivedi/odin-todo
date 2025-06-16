@@ -80,7 +80,7 @@ export class Todo {
 }
 
 export class TodoManager {
-    static #spaces = {};
+    static #spaces = {"Personal": [], "Work": []};
 
     static get spaces() {
         return this.#spaces;
