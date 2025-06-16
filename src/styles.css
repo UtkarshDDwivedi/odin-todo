@@ -73,7 +73,7 @@ body {
     opacity: 70%;
 }
 
-.active {
+.btn-active {
     background-color: #1d3557;
     color: #457b9d;
     font-weight: 700;
@@ -122,11 +122,12 @@ body {
     padding: 8px 16px;
 }
 
-.card-content:hover{
+.card-content:hover,
+.card-active{
     background-color: #0b2344;
     color: #f1faee;
     font-weight: 800;
-    opacity: 30%;
+    opacity: 90%;
 }
 
 .info {
