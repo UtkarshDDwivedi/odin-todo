@@ -50,7 +50,7 @@
             <input type="text" id="todo-description" name="description">
 
             <label for="space">Space:</label>
-            <input type="text" id="space" name="space">
+            <select name="space" id="space"></select>
 
             <label for="priority">Priority:</label>
             <select name="priority" id="priority">
@@ -63,8 +63,8 @@
             <input type="date" name="due-date" id="due-date">
 
             <div id="form-btn-div">
-                <button class="btn submit-todo" type="submit">Add</button>
-                <button class="btn cancel-todo" type="button">Cancel</button>
+                <button class="btn" id="submit-todo-btn" type="submit">Add</button>
+                <button class="btn" id="cancel-todo-btn" type="button">Cancel</button>
             </div>
         </form>
     </dialog>
