@@ -12,9 +12,20 @@ let createSpaceBtn = document.querySelector("#create-space-btn");
 let cancelSpaceBtn = document.querySelector("#cancel-space-btn");
 let spaceForm = document.querySelector("#space-form");
 
-document.addEventListener("load", ()=>{
+document.addEventListener("DOMContentLoaded", () => {
+    TodoManager.load();
+    let contentSec = document.querySelector(".content");
 
-})
+    for (let space in TodoManager.spaces) {
+        let color = TodoManager.spaces[space].color;
+        addSpace(space, color);
+        let todos = TodoManager.spaces[space].todos;
+        for (let todo of todos) {
+            contentSec.appendChild(todo.card);
+            console.log("card appended");
+        }
+    }
+});
 
 createTodoBtn.addEventListener("click", () => {
     let dialog = document.querySelector("#add-todo");
@@ -50,6 +61,7 @@ todoForm.addEventListener("submit", (e) => {
     let contentSec = document.querySelector(".content");
     contentSec.appendChild(todo.card);
     let dialog = document.querySelector("#add-todo")
+    todoForm.reset();
     dialog.close();
 })
 
@@ -64,14 +76,23 @@ cancelSpaceBtn.addEventListener("click", (e) => {
     dialog.close();
 })
 
-spaceForm.addEventListener("submit", (e)=>{
+spaceForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     let formData = new FormData(spaceForm);
     let name = formData.get("space");
+    name = name.trim();
+
+    if (name in TodoManager.spaces) {
+        alert(`A space named "${name}" already exists. Please choose a different name.`);
+        return;
+    }
+
     let color = formData.get("color");
     addSpace(name, color);
+    TodoManager.save();
 
     let dialog = document.querySelector("#add-space");
+    spaceForm.reset();
     dialog.close();
 })

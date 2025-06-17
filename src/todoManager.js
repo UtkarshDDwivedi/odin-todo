@@ -19,11 +19,16 @@ export default class TodoManager {
         if (!data) return;
 
         this.#spaces = {};
+
         for (let key in data) {
             this.#spaces[key] = {
                 color: data[key].color,
-                todos: data[key].todos.map(obj => Todo.fromJSON(obj))
+                todos: []
             };
+        }
+        
+        for (let key in data) {
+            this.#spaces[key].todos = data[key].todos.map(obj => Todo.fromJSON(obj));
         }
     }
 
@@ -32,7 +37,9 @@ export default class TodoManager {
     }
 
     static addSpace(space, color) {
-        this.#spaces[space] = { "color": color, "todos": [] };
+        if (!(space in this.#spaces)) {
+            this.#spaces[space] = { "color": color, "todos": [] };
+        }
     }
 
     static addTodo(todo) {

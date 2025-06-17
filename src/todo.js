@@ -78,6 +78,12 @@ export default class Todo {
             this.#status = status;
         }
     }
+    set id(id) {
+        this.#id = id;
+    }
+    set color(color) {
+        this.#color = color;
+    }
 
     #createLabel() {
         let labelDiv = document.createElement("div")
@@ -131,13 +137,14 @@ export default class Todo {
     }
 
     toJSON() {
-        return { title: this.#title, description: this.#description, dueDate: this.#dueDate, priority: this.#priority, space: this.#space, id: this.#id, status: this.#status }
+        return { title: this.#title, description: this.#description, dueDate: this.#dueDate, priority: this.#priority, space: this.#space, id: this.#id, status: this.#status, color: this.#color }
     }
 
     static fromJSON(obj) {
         const todo = new Todo(obj.title, obj.description, obj.dueDate, obj.priority, obj.space);
-        todo.#id = obj.id;
+        todo.id = obj.id;
         todo.status = obj.status;
+        todo.color = obj.color;
         return todo;
     }
 }

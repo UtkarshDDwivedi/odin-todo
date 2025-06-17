@@ -3,7 +3,7 @@ import TodoManager from "./todoManager";
 export function createSpace(name, color) {
     TodoManager.addSpace(name, color);
 
-    let spaceOptions = document.querySelector("#space");
+    let spaceOptions = document.querySelector("#space-select");
     let newOption = document.createElement("option");
     newOption.textContent = name;
     newOption.value = name;
