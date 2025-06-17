@@ -1,30 +1,19 @@
-export class Space {
-    #space;
-    #color;
-    #button;
+import TodoManager from "./todoManager";
 
-    constructor(space, color) {
-        this.#space = space;
-        this.#color = color
+export function createSpace(name, color) {
+    let button = document.createElement("button");
+    let colorDiv = document.createElement("div");
+    colorDiv.style.backgroundColor = color;
+    colorDiv.classList.add("space-color");
 
-        this.#button = this.#createButton();
-    }
+    button.appendChild(colorDiv);
+    button.append(space);
+    button.classList.add("btn");
+    button.classList.add("space-btn");
 
-    #createButton() {
-        let button = document.createElement("button");
-        let colorDiv = document.createElement("div");
-        colorDiv.style.backgroundColor = this.#color;
-        colorDiv.classList.add("space-color");
+    return button;
+}
 
-        button.appendChild(colorDiv);
-        button.append(this.#space);
-        button.classList.add("btn");
-        button.classList.add("space-btn");
-
-        return button;
-    }
-
-    get element() {
-        return this.#button;
-    }
+export function removeSpace(space) {
+    delete TodoManager.spaces[space];
 }

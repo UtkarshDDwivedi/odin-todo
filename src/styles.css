@@ -129,7 +129,7 @@ body {
 }
 
 .card-content:hover,
-.card-active{
+.card-active {
     background-color: #0b2344;
     color: #f1faee;
     font-weight: 800;
@@ -159,6 +159,7 @@ body {
     background-color: red;
     border-radius: 5px;
 }
+
 .label {
     font-size: 2rem;
 }
@@ -172,4 +173,64 @@ body {
 label,
 input {
     cursor: pointer;
+}
+
+dialog {
+    margin: auto;
+    height: 700px;
+    width: 900px;
+}
+
+form input {
+    cursor: text;
+}
+
+form select {
+    cursor: pointer;
+}
+
+form {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 500;
+    gap: 10px;
+    background-color: #77aaca;
+    color: #0b2344;
+    padding: 24px;
+}
+
+form input,
+form select {
+    width: 700px;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    padding: 8px;
+    font-size: 1.2rem;
+}
+
+form select,
+#due-date {
+    width: 300px;
+    text-align: center;
+}
+
+#form-btn-div {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+#form-btn-div button {
+    width: 300px;
+    background-color: #23597a;
+    color: #91aace;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: centerd;
 }
