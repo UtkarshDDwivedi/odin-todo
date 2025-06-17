@@ -37,10 +37,12 @@
             </button>
         </div>
     </div>
+
     <div class="main">
         <div class="title">Today</div>
         <div class="content"></div>
     </div>
+
     <dialog id="add-todo">
         <form id="todo-form">
             <label for="todo-title">Title:</label>
@@ -65,6 +67,21 @@
             <div id="form-btn-div">
                 <button class="btn" id="submit-todo-btn" type="submit">Add</button>
                 <button class="btn" id="cancel-todo-btn" type="button">Cancel</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="add-space">
+        <form id="space-form">
+            <label for="space">Space:</label>
+            <input type="text" name="space" id="space">
+
+            <label for="color">Color:</label>
+            <input type="color" name="color" id="color">
+
+            <div id="form-btn-div">
+                <button class="btn" id="submit-space-btn" type="submit">Add</button>
+                <button class="btn" id="cancel-space-btn" type="button">Cancel</button>
             </div>
         </form>
     </dialog>

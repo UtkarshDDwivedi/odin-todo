@@ -8,6 +8,14 @@ let createTodoBtn = document.querySelector("#create-todo-btn");
 let cancelTodoBtn = document.querySelector("#cancel-todo-btn");
 let todoForm = document.querySelector("#todo-form");
 
+let createSpaceBtn = document.querySelector("#create-space-btn");
+let cancelSpaceBtn = document.querySelector("#cancel-space-btn");
+let spaceForm = document.querySelector("#space-form");
+
+document.addEventListener("load", ()=>{
+
+})
+
 createTodoBtn.addEventListener("click", () => {
     let dialog = document.querySelector("#add-todo");
     dialog.showModal();
@@ -24,9 +32,6 @@ function addSpace(name, color) {
     let spacesSec = document.querySelector(".spaces");
     spacesSec.appendChild(button);
 }
-
-addSpace("personal", "blue");
-addSpace("work", "red");
 
 todoForm.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -45,5 +50,28 @@ todoForm.addEventListener("submit", (e) => {
     let contentSec = document.querySelector(".content");
     contentSec.appendChild(todo.card);
     let dialog = document.querySelector("#add-todo")
+    dialog.close();
+})
+
+createSpaceBtn.addEventListener("click", () => {
+    let dialog = document.querySelector("#add-space");
+    dialog.showModal();
+})
+
+cancelSpaceBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    let dialog = document.querySelector("#add-space");
+    dialog.close();
+})
+
+spaceForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+
+    let formData = new FormData(spaceForm);
+    let name = formData.get("space");
+    let color = formData.get("color");
+    addSpace(name, color);
+
+    let dialog = document.querySelector("#add-space");
     dialog.close();
 })
