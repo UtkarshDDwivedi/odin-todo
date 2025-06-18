@@ -6,9 +6,7 @@ import { createSpace, removeSpace } from "./space";
 
 let createTodoBtn = document.querySelector("#create-todo-btn");
 let cancelTodoBtn = document.querySelector("#cancel-todo-btn");
-let removeTodoBtns = document.querySelectorAll(".remove-todo-btn");
 let todoForm = document.querySelector("#todo-form");
-let checkboxes = document.querySelectorAll(".card input");
 
 let createSpaceBtn = document.querySelector("#create-space-btn");
 let cancelSpaceBtn = document.querySelector("#cancel-space-btn");
@@ -26,14 +24,12 @@ function setActiveTask(task) {
     activeTask.classList.remove("btn-active");
     activeTask = task;
     activeTask.classList.add("btn-active");
-    configTodos();
 }
 
 function setActiveSpace(space) {
     activeSpace.classList.remove("btn-active");
     activeSpace = space;
     activeSpace.classList.add("btn-active");
-    configTodos();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -69,46 +65,92 @@ function addSpace(name, color) {
 }
 
 function configSpaces() {
-    spaces = document.querySelectorAll(".space-btn");
-    spaces.forEach(space => {
-        space.addEventListener("click", ()=>{
-            setActiveSpace(space);
-            TodoManager.displayCards(activeTask, activeSpace);
-        })
-    })
+    const spacesSection = document.querySelector(".spaces");
 
-    removeSpaceBtns = document.querySelectorAll(".space-btn img");
-    removeSpaceBtns.forEach(removeSpaceBtn => {
-        removeSpaceBtn.addEventListener("click", () => {
-            let confirmation = confirm("Warning!: This will delete the space and all the Todo(s) inside it.");
+    spacesSection.addEventListener("click", (e) => {
+        const button = e.target.closest(".space-btn");
+        if (!button) return;
+
+        if (!e.target.matches("img")) {
+            setActiveSpace(button);
+            TodoManager.displayCards(activeTask, activeSpace);
+        }
+
+        if (e.target.tagName === "IMG") {
+            const confirmation = confirm("Warning!: This will delete the space and all the Todo(s) inside it.");
             if (confirmation) {
-                removeSpace(removeSpaceBtn.parentElement);
+                removeSpace(button);
                 TodoManager.save();
+                TodoManager.displayCards(activeTask, activeSpace);
             }
-        })
+        }
     });
 }
+
 
 function configTodos() {
     let content = document.querySelector(".content");
 
     content.addEventListener("click", (e) => {
+        const card = e.target.closest(".card");
+
+        if (!card) return;
+
         if (e.target.classList.contains("remove-todo-btn")) {
-            let card = e.target.closest(".card");
-            TodoManager.removeTodo(card);
-            TodoManager.save();
-            TodoManager.displayCards(activeTask, activeSpace);
+            e.stopPropagation();
+            let confirmation = confirm("Warning!: This will delete the todo permanently.");
+            if (confirmation) {
+                TodoManager.removeTodo(card);
+                TodoManager.save();
+                TodoManager.displayCards(activeTask, activeSpace);
+            }
         }
 
         if (e.target.tagName === "INPUT" && e.target.type === "checkbox") {
             e.stopPropagation();
-            let card = e.target.closest(".card");
             TodoManager.toggleStatus(card);
             TodoManager.save();
             TodoManager.displayCards(activeTask, activeSpace);
         }
+
+        if (!e.target.closest(".remove-todo-btn") && !(e.target.tagName === "INPUT" && e.target.type === "checkbox")) {
+            let sidebar = TodoManager.getSidebar(card);
+            let rightSec = document.querySelector(".right");
+            rightSec.innerHTML = '';
+            rightSec.appendChild(sidebar);
+
+            let editTodoDoneBtn = document.querySelector("#edit-todo-done");
+            let editTodoForm = document.querySelector(".right form");
+
+            editTodoDoneBtn.addEventListener("click", () => {
+                rightSec.innerHTML = '';
+            });
+
+            editTodoForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                let formData = new FormData(editTodoForm);
+                let title = formData.get("title");
+                let description = formData.get("description");
+                let space = formData.get("space");
+                let priority = formData.get("priority");
+                let dueDate = formData.get("due-date");
+
+                let todo = TodoManager.getTodo(card);
+                todo.title = title;
+                todo.description = description;
+                todo.space = space;
+                todo.priority = priority;
+                todo.dueDate = dueDate;
+
+                TodoManager.save();
+                TodoManager.displayCards(activeTask, activeSpace);
+
+                rightSec.innerHTML = '';
+            });
+        }
     });
 }
+
 
 todoForm.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -128,8 +170,6 @@ todoForm.addEventListener("submit", (e) => {
     contentSec.appendChild(todo.card);
 
     TodoManager.displayCards(activeTask, activeSpace);
-
-    configTodos();
 
     let dialog = document.querySelector("#add-todo")
     todoForm.reset();
@@ -169,19 +209,17 @@ spaceForm.addEventListener("submit", (e) => {
     let dialog = document.querySelector("#add-space");
     spaceForm.reset();
 
-    configSpaces();
-
     dialog.close();
 })
 
 tasks.forEach(task => {
-    task.addEventListener("click", ()=>{
+    task.addEventListener("click", () => {
         setActiveTask(task);
         TodoManager.displayCards(activeTask, activeSpace);
     })
 })
 
-allSpacesBtn.addEventListener("click", ()=>{
+allSpacesBtn.addEventListener("click", () => {
     setActiveSpace(allSpacesBtn);
     TodoManager.displayCards(activeTask, activeSpace);
 })

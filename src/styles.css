@@ -91,7 +91,7 @@ body {
     border-radius: 8px;
 }
 
-.space-btn img{
+.space-btn img {
     margin-left: auto;
 }
 
@@ -103,7 +103,7 @@ body {
     margin: 16px;
     color: #1d3557;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr;
 }
 
 .left .title {
@@ -120,7 +120,7 @@ body {
     gap: 8px;
 }
 
-.card { 
+.card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -240,13 +240,13 @@ form select,
     text-align: center;
 }
 
-#form-btn-div {
+.form-btn-div {
     display: flex;
     gap: 16px;
     margin-top: 16px;
 }
 
-#form-btn-div button {
+.form-btn-div button {
     width: 300px;
     background-color: #23597a;
     color: #91aace;
@@ -262,4 +262,15 @@ form select,
 
 #color {
     cursor: pointer;
+}
+
+#cardSidebar {
+    background-color: #a8dadc;
+    border: 16px double #457b9d;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px; 
+}
+
+#cardSidebar {
+    justify-content: start;
 }
