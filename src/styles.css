@@ -91,6 +91,14 @@ body {
     border-radius: 8px;
 }
 
+.space-btn img{
+    margin-left: auto;
+}
+
+.space-btn img:hover {
+    height: 30px;
+}
+
 .main {
     margin: 16px;
     color: #1d3557;

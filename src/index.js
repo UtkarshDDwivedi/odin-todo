@@ -10,6 +10,7 @@ let todoForm = document.querySelector("#todo-form");
 
 let createSpaceBtn = document.querySelector("#create-space-btn");
 let cancelSpaceBtn = document.querySelector("#cancel-space-btn");
+let removeSpaceBtns = document.querySelectorAll(".space-btn img");
 let spaceForm = document.querySelector("#space-form");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,6 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("card appended");
         }
     }
+
+    configDeleteSpace();
 });
 
 createTodoBtn.addEventListener("click", () => {
@@ -42,6 +45,20 @@ function addSpace(name, color) {
     let button = createSpace(name, color);
     let spacesSec = document.querySelector(".spaces");
     spacesSec.appendChild(button);
+}
+
+function configDeleteSpace() {
+    removeSpaceBtns = document.querySelectorAll(".space-btn img");
+
+    removeSpaceBtns.forEach(removeSpaceBtn => {
+        removeSpaceBtn.addEventListener("click", () => {
+            let confirmation = confirm("Warning!: This will delete the space and all the Todo(s) inside it.");
+            if (confirmation) {
+                removeSpace(removeSpaceBtn.parentElement);
+                TodoManager.save();
+            }
+        })
+    });
 }
 
 todoForm.addEventListener("submit", (e) => {
@@ -94,5 +111,8 @@ spaceForm.addEventListener("submit", (e) => {
 
     let dialog = document.querySelector("#add-space");
     spaceForm.reset();
+
+    configDeleteSpace();
+    
     dialog.close();
 })
