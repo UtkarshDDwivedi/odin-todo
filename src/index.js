@@ -20,10 +20,15 @@ let allSpacesBtn = document.querySelector("#all-spaces");
 let activeTask = document.querySelector("#today-btn");
 let activeSpace = document.querySelector("#all-spaces");
 
+let titleElement = document.querySelector(".left .title");
+
 function setActiveTask(task) {
     activeTask.classList.remove("btn-active");
     activeTask = task;
     activeTask.classList.add("btn-active");
+
+    titleElement.textContent = task.dataset.title;
+    console.log(titleElement);
 }
 
 function setActiveSpace(space) {
