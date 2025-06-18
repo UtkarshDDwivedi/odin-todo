@@ -89,10 +89,15 @@ export default class Todo {
     }
 
     #createLabel() {
-        let labelDiv = document.createElement("div")
+        let labelDiv = document.createElement("div");
+
         let input = document.createElement("input");
         input.type = "checkbox";
         input.id = this.#id;
+        if (this.#status === "completed") {
+            input.checked = true;
+        }
+
         let label = document.createElement("label");
         label.htmlFor = this.#id;
         label.textContent = this.#title;

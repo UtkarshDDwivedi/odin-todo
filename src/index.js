@@ -8,6 +8,7 @@ let createTodoBtn = document.querySelector("#create-todo-btn");
 let cancelTodoBtn = document.querySelector("#cancel-todo-btn");
 let removeTodoBtns = document.querySelectorAll(".remove-todo-btn");
 let todoForm = document.querySelector("#todo-form");
+let checkboxes = document.querySelectorAll(".card input");
 
 let createSpaceBtn = document.querySelector("#create-space-btn");
 let cancelSpaceBtn = document.querySelector("#cancel-space-btn");
@@ -89,14 +90,24 @@ function configSpaces() {
 }
 
 function configTodos() {
-    removeTodoBtns = document.querySelectorAll(".remove-todo-btn");
-    removeTodoBtns.forEach(btn => {
-        btn.addEventListener("click", (e)=>{
+    let content = document.querySelector(".content");
+
+    content.addEventListener("click", (e) => {
+        if (e.target.classList.contains("remove-todo-btn")) {
             let card = e.target.closest(".card");
             TodoManager.removeTodo(card);
             TodoManager.save();
-        })
-    })
+            TodoManager.displayCards(activeTask, activeSpace);
+        }
+
+        if (e.target.tagName === "INPUT" && e.target.type === "checkbox") {
+            e.stopPropagation();
+            let card = e.target.closest(".card");
+            TodoManager.toggleStatus(card);
+            TodoManager.save();
+            TodoManager.displayCards(activeTask, activeSpace);
+        }
+    });
 }
 
 todoForm.addEventListener("submit", (e) => {

@@ -59,11 +59,19 @@ export default class TodoManager {
         card.remove();
     }
 
-    static toggleStatus(todo) {
-        if (todo.status == "completed") {
-            todo.status = "not completed";
-        } else if (todo.status == "not completed") {
-            todo.status = "completed";
+    static toggleStatus(card) {
+        const space = card.getAttribute('data-space');
+        if (space in this.#spaces) {
+            let todos = this.#spaces[space].todos;
+            const index = todos.findIndex(t => t.id === card.id);
+            let todo = this.#spaces[space].todos[index];
+            if (index !== -1) {
+                if (todo.status == "completed") {
+                    todo.status = "not completed";
+                } else if (todo.status == "not completed") {
+                    todo.status = "completed";
+                }
+            }
         }
     }
 
@@ -78,11 +86,11 @@ export default class TodoManager {
                 todos: this.#spaces[key].todos.filter(todo => {
                     let dueDate = new Date(todo.dueDate);
                     dueDate.setHours(0, 0, 0, 0);
-                    if (activeTask.id == "today-btn" && dueDate.getTime() === currentDate.getTime()) {
+                    if (activeTask.id == "today-btn" && dueDate.getTime() === currentDate.getTime() && todo.status === "not completed") {
                         return true;
-                    } else if (activeTask.id == "pending-btn" && dueDate.getTime() >= currentDate.getTime()) {
+                    } else if (activeTask.id == "pending-btn" && dueDate.getTime() >= currentDate.getTime() && todo.status === "not completed") {
                         return true;
-                    } else if (activeTask.id == "overdue-btn" && dueDate.getTime() < currentDate.getTime()) {
+                    } else if (activeTask.id == "overdue-btn" && dueDate.getTime() < currentDate.getTime() && todo.status === "not completed") {
                         return true;
                     } else if (activeTask.id == "completed-btn" && todo.status === "completed") {
                         return true;
