@@ -26,7 +26,7 @@ export default class TodoManager {
                 todos: []
             };
         }
-        
+
         for (let key in data) {
             this.#spaces[key].todos = data[key].todos.map(obj => Todo.fromJSON(obj));
         }
@@ -61,6 +61,49 @@ export default class TodoManager {
             todo.status = "not completed";
         } else if (todo.status == "not completed") {
             todo.status = "completed";
+        }
+    }
+
+    static #filterCards(activeTask) {
+        let FilteredTodos = {};
+        const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0);
+
+        for (let key in this.#spaces) {
+            FilteredTodos[key] = {
+                color: this.#spaces[key].color,
+                todos: this.#spaces[key].todos.filter(todo => {
+                    let dueDate = new Date(todo.dueDate);
+                    dueDate.setHours(0, 0, 0, 0);
+                    if (activeTask.id == "today-btn" && dueDate.getTime() === currentDate.getTime()) {
+                        return true;
+                    } else if (activeTask.id == "pending-btn" && dueDate.getTime() >= currentDate.getTime()) {
+                        return true;
+                    } else if (activeTask.id == "overdue-btn" && dueDate.getTime() < currentDate.getTime()) {
+                        return true;
+                    } else if (activeTask.id == "completed-btn" && todo.status === "completed") {
+                        return true;
+                    }
+
+                    return false;
+                })
+            };
+        }
+
+        return FilteredTodos;
+    }
+
+    static displayCards(activeTask, activeSpace) {
+        let contentSec = document.querySelector(".content");
+        contentSec.innerHTML = '';
+
+        let filteredTodos = this.#filterCards(activeTask);
+        for (let key in filteredTodos) {
+            filteredTodos[key].todos.forEach(todo => {
+                if (activeSpace.id == "all-spaces" || todo.space == activeSpace.id) {
+                    contentSec.appendChild(todo.card);
+                }
+            });
         }
     }
 }
