@@ -6,6 +6,7 @@ import { createSpace, removeSpace } from "./space";
 
 let createTodoBtn = document.querySelector("#create-todo-btn");
 let cancelTodoBtn = document.querySelector("#cancel-todo-btn");
+let removeTodoBtns = document.querySelectorAll(".remove-todo-btn");
 let todoForm = document.querySelector("#todo-form");
 
 let createSpaceBtn = document.querySelector("#create-space-btn");
@@ -24,17 +25,18 @@ function setActiveTask(task) {
     activeTask.classList.remove("btn-active");
     activeTask = task;
     activeTask.classList.add("btn-active");
+    configTodos();
 }
 
 function setActiveSpace(space) {
     activeSpace.classList.remove("btn-active");
     activeSpace = space;
     activeSpace.classList.add("btn-active");
+    configTodos();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     TodoManager.load();
-    let contentSec = document.querySelector(".content");
 
     for (let space in TodoManager.spaces) {
         let color = TodoManager.spaces[space].color;
@@ -45,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     TodoManager.displayCards(activeTask, activeSpace);
 
     configSpaces();
+    configTodos();
 });
 
 createTodoBtn.addEventListener("click", () => {
@@ -85,6 +88,17 @@ function configSpaces() {
     });
 }
 
+function configTodos() {
+    removeTodoBtns = document.querySelectorAll(".remove-todo-btn");
+    removeTodoBtns.forEach(btn => {
+        btn.addEventListener("click", (e)=>{
+            let card = e.target.closest(".card");
+            TodoManager.removeTodo(card);
+            TodoManager.save();
+        })
+    })
+}
+
 todoForm.addEventListener("submit", (e) => {
     e.preventDefault()
 
@@ -103,6 +117,8 @@ todoForm.addEventListener("submit", (e) => {
     contentSec.appendChild(todo.card);
 
     TodoManager.displayCards(activeTask, activeSpace);
+
+    configTodos();
 
     let dialog = document.querySelector("#add-todo")
     todoForm.reset();

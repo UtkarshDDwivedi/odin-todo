@@ -1,4 +1,5 @@
 import calendar from './assets/desk-calendar.png';
+import deleteImg from './assets/remove.png'
 import TodoManager from "./todoManager";
 
 export default class Todo {
@@ -53,6 +54,8 @@ export default class Todo {
         this.#card.appendChild(content);
         this.#card.appendChild(hr);
         this.#card.classList.add("card");
+        this.#card.setAttribute('data-space', this.#space);
+        this.#card.id = this.#id;
 
         return this.#card;
     }
@@ -93,8 +96,16 @@ export default class Todo {
         let label = document.createElement("label");
         label.htmlFor = this.#id;
         label.textContent = this.#title;
-        labelDiv.appendChild(input);
-        labelDiv.appendChild(label);
+        let inputDiv = document.createElement("div");
+        inputDiv.appendChild(input);
+        inputDiv.appendChild(label);
+        let deleteBtn = document.createElement("img");
+        deleteBtn.src = deleteImg;
+        deleteBtn.alt = "Remove Todo";
+        deleteBtn.classList.add("remove-todo-btn")
+
+        labelDiv.appendChild(inputDiv);
+        labelDiv.appendChild(deleteBtn);
         labelDiv.classList.add("label");
 
         return labelDiv;
@@ -118,8 +129,19 @@ export default class Todo {
         spaceDiv.append(this.#space);
         spaceDiv.classList.add("space");
 
+        let priorityDiv = document.createElement("div");
+        priorityDiv.append(`${this.#priority} Priority`)
+        if (this.#priority == "High") {
+            priorityDiv.style.color = "#D22B2B";
+        } else if (this.#priority == "Medium") {
+            priorityDiv.style.color = "#CD7F32";
+        } else if (this.#priority == "Low") {
+            priorityDiv.style.color = "green";
+        }
+
         infoDiv.appendChild(date);
         infoDiv.appendChild(spaceDiv);
+        infoDiv.appendChild(priorityDiv);
         infoDiv.classList.add("info");
 
         return infoDiv;

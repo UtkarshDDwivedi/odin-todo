@@ -46,14 +46,17 @@ export default class TodoManager {
         this.#spaces[todo.space].todos.push(todo);
     }
 
-    static removeTodo(todo) {
-        if (todo.space in this.#spaces) {
-            let todos = this.#spaces[todo.space].todos;
-            const index = todos.findIndex(t => t.id === todo.id);
+    static removeTodo(card) {
+        const space = card.getAttribute('data-space');
+        if (space in this.#spaces) {
+            let todos = this.#spaces[space].todos;
+            const index = todos.findIndex(t => t.id === card.id);
             if (index !== -1) {
-                this.#spaces[todo.space].todos.splice(index, 1);
+                this.#spaces[space].todos.splice(index, 1);
             }
         }
+
+        card.remove();
     }
 
     static toggleStatus(todo) {
