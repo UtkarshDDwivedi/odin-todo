@@ -79,6 +79,11 @@ export default class TodoManager {
         }
     }
 
+    static #parseLocalDate(dateString) {
+        const [year, month, day] = dateString.split("-").map(Number);
+        return new Date(year, month - 1, day); // local midnight
+    }
+
     static #filterCards(activeTask) {
         let FilteredTodos = {};
         const currentDate = new Date();
@@ -88,7 +93,7 @@ export default class TodoManager {
             FilteredTodos[key] = {
                 color: this.#spaces[key].color,
                 todos: this.#spaces[key].todos.filter(todo => {
-                    let dueDate = new Date(todo.dueDate);
+                    let dueDate = this.#parseLocalDate(todo.dueDate);
                     dueDate.setHours(0, 0, 0, 0);
                     if (activeTask.id == "today-btn" && dueDate.getTime() === currentDate.getTime() && todo.status === "not completed") {
                         return true;
